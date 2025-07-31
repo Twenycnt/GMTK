@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=4 uid="uid://bjjhr4826x2jo"]
+[gd_scene load_steps=17 format=4 uid="uid://bjjhr4826x2jo"]
 
 [ext_resource type="Script" uid="uid://cdrvfk55d5g0j" path="res://Scripts/init.gd" id="1_3bdrj"]
 [ext_resource type="Script" uid="uid://cmte5214y2mdo" path="res://Scripts/Player_Movement.gd" id="1_p6gg1"]
@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://bx6ovxeimk7y" path="res://Imports/Dungeon/Background/Dungeon_Background_Guide.png" id="3_lrus4"]
 [ext_resource type="Script" uid="uid://b0kcw0wtqecqx" path="res://Scripts/changement cam 2 3.gd" id="3_yp48q"]
 [ext_resource type="Script" uid="uid://dlkr347dywfmp" path="res://Scripts/Changement cam 1 2.gd" id="4_8t5iv"]
+[ext_resource type="Script" uid="uid://bmm40uin7bwf5" path="res://Scripts/npc_1.gd" id="7_6yy46"]
+[ext_resource type="Texture2D" uid="uid://bj71v2iwsqb6a" path="res://Imports/koala.jpg" id="8_f6sb3"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8t5iv"]
 texture = ExtResource("3_lrus4")
@@ -655,6 +657,12 @@ b = Vector2(0, 19)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8t5iv"]
 size = Vector2(24, 22)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mn0nn"]
+size = Vector2(24, 22)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fi6k0"]
+size = Vector2(20, 18)
+
 [node name="Scene" type="Node2D"]
 script = ExtResource("1_3bdrj")
 
@@ -711,5 +719,34 @@ scale = Vector2(0.195313, 0.179688)
 texture = ExtResource("2_lrus4")
 metadata/_edit_lock_ = true
 
+[node name="NPC1" type="StaticBody2D" parent="."]
+position = Vector2(-139, 36)
+script = ExtResource("7_6yy46")
+
+[node name="SpeakZone" type="Area2D" parent="NPC1"]
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="NPC1/SpeakZone"]
+shape = SubResource("RectangleShape2D_mn0nn")
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="NPC1"]
+shape = SubResource("RectangleShape2D_fi6k0")
+metadata/_edit_lock_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="NPC1/CollisionShape2D"]
+scale = Vector2(0.0320312, 0.0441176)
+texture = ExtResource("8_f6sb3")
+metadata/_edit_lock_ = true
+
+[node name="Blabla" type="RichTextLabel" parent="NPC1"]
+offset_left = -45.0
+offset_top = 20.0
+offset_right = 321.0
+offset_bottom = 67.0
+text = "Bonjour, je suis un koala et je suis ici pour tester la mécanique de parler."
+
 [connection signal="area_entered" from="onetotwo" to="onetotwo" method="_on_area_entered"]
 [connection signal="area_entered" from="twotothree" to="twotothree" method="_on_area_entered"]
+[connection signal="area_entered" from="NPC1/SpeakZone" to="NPC1" method="_on_area_2d_area_entered"]
+[connection signal="area_exited" from="NPC1/SpeakZone" to="NPC1" method="_on_speak_zone_area_exited"]
