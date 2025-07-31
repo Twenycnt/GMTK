@@ -1,6 +1,7 @@
-[gd_scene load_steps=17 format=4 uid="uid://bjjhr4826x2jo"]
+[gd_scene load_steps=18 format=4 uid="uid://bjjhr4826x2jo"]
 
-[ext_resource type="Script" uid="uid://cdrvfk55d5g0j" path="res://Scripts/init.gd" id="1_3bdrj"]
+[ext_resource type="Script" uid="uid://bshpr4xgjc2rf" path="res://Scripts/Loop.gd" id="1_6yy46"]
+[ext_resource type="Script" uid="uid://cdrvfk55d5g0j" path="res://Scripts/init.gd" id="1_f6sb3"]
 [ext_resource type="Script" uid="uid://cmte5214y2mdo" path="res://Scripts/Player_Movement.gd" id="1_p6gg1"]
 [ext_resource type="Texture2D" uid="uid://d3bvd4ikw5hmh" path="res://icon.svg" id="2_lrus4"]
 [ext_resource type="Texture2D" uid="uid://bx6ovxeimk7y" path="res://Imports/Dungeon/Background/Dungeon_Background_Guide.png" id="3_lrus4"]
@@ -664,7 +665,9 @@ size = Vector2(24, 22)
 size = Vector2(20, 18)
 
 [node name="Scene" type="Node2D"]
-script = ExtResource("1_3bdrj")
+
+[node name="Init" type="Node2D" parent="."]
+script = ExtResource("1_f6sb3")
 
 [node name="TileMap" type="Node2D" parent="."]
 
@@ -740,13 +743,31 @@ texture = ExtResource("8_f6sb3")
 metadata/_edit_lock_ = true
 
 [node name="Blabla" type="RichTextLabel" parent="NPC1"]
+visible = false
 offset_left = -45.0
 offset_top = 20.0
 offset_right = 321.0
 offset_bottom = 67.0
 text = "Bonjour, je suis un koala et je suis ici pour tester la mécanique de parler."
 
+[node name="LoopManager" type="Node2D" parent="."]
+script = ExtResource("1_6yy46")
+
+[node name="LoopTimer" type="Timer" parent="LoopManager"]
+wait_time = 10.0
+autostart = true
+
+[node name="LoopText" type="RichTextLabel" parent="LoopManager"]
+visible = false
+modulate = Color(0.739789, 1.93726e-06, 9.62615e-07, 1)
+offset_left = -65.0
+offset_top = -16.0
+offset_right = 65.0
+offset_bottom = 10.0
+text = "Time to go back."
+
 [connection signal="area_entered" from="onetotwo" to="onetotwo" method="_on_area_entered"]
 [connection signal="area_entered" from="twotothree" to="twotothree" method="_on_area_entered"]
 [connection signal="area_entered" from="NPC1/SpeakZone" to="NPC1" method="_on_area_2d_area_entered"]
 [connection signal="area_exited" from="NPC1/SpeakZone" to="NPC1" method="_on_speak_zone_area_exited"]
+[connection signal="timeout" from="LoopManager/LoopTimer" to="LoopManager" method="_on_loop_timer_timeout"]
