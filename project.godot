@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="GMTK"
-run/main_scene="res://node_2d.tscn"
+config/name="GMTK Jam"
+run/main_scene="uid://bjjhr4826x2jo"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
